@@ -1,22 +1,17 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import Home from './pages/Home';
-import Login from './pages/Login';
-import Dashboard from './pages/Dashboard';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import Profile from './pages/Profile'
+import OrderHistory from './pages/OrderHistory'
 
 function App() {
   return (
     <Router>
-      <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/" element={<Navigate to="/profile" replace />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/order-history" element={<OrderHistory />} />
       </Routes>
-      <Footer />
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App
