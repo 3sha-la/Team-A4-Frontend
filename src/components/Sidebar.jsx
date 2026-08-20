@@ -21,7 +21,7 @@ export default function Sidebar({
   onNavigate = () => {},
   wishlistCount = 0,
   cartCount = 0,
-  userName = "Amara Silva",
+  userName = "Nadun",
 }) {
   const navItems = [
     { key: "home", label: "Home Collection", icon: Home },

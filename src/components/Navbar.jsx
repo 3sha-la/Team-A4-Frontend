@@ -29,7 +29,7 @@ export default function Navbar({
           <span className="flex h-8 w-8 items-center justify-center rounded-md bg-indigo-500 text-sm font-bold">
             A
           </span>
-          <span>AppName</span>
+          <span>House of Salaga</span>
         </a>
 
         {/* Desktop links */}

@@ -8,19 +8,24 @@ import Register from './pages/Register';
 import ForgotPassword from './pages/ForgotPassword';
 import AllProductsPage from './pages/AllProductsPage';
 import WishlistPage from './pages/WishlistPage';
+import PaymentPage from './pages/PaymentPage';
+import UserManagement from './pages/UserManagement';
 import { useWishlist, WishlistProvider } from './context/WishlistContext';
 
 function AppLayout() {
   const location = useLocation();
   const navigate = useNavigate();
   const { items } = useWishlist();
-  const showSidebar = ['/products', '/wishlist'].includes(location.pathname);
+  const showSidebar = ['/products', '/wishlist', '/payment', '/profile', '/orders'].includes(location.pathname);
 
   const handleSidebarNavigation = (key) => {
     const routes = {
       home: '/',
       products: '/products',
       wishlist: '/wishlist',
+      cart: '/payment',
+      profile: '/profile',
+      orders: '/orders',
     };
 
     if (routes[key]) navigate(routes[key]);
@@ -47,7 +52,17 @@ function AppLayout() {
       <div className={showSidebar ? 'flex min-h-screen bg-neutral-100' : ''}>
         {showSidebar && (
           <Sidebar
-            active={location.pathname === '/wishlist' ? 'wishlist' : 'products'}
+            active={
+              location.pathname === '/wishlist'
+                ? 'wishlist'
+                : location.pathname === '/payment'
+                  ? 'cart'
+                  : location.pathname === '/profile'
+                    ? 'profile'
+                    : location.pathname === '/orders'
+                      ? 'orders'
+                      : 'products'
+            }
             onNavigate={handleSidebarNavigation}
             wishlistCount={items.length}
           />
@@ -60,6 +75,9 @@ function AppLayout() {
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/products" element={<AllProductsPage />} />
             <Route path="/wishlist" element={<WishlistPage />} />
+            <Route path="/payment" element={<PaymentPage />} />
+            <Route path="/profile" element={<UserManagement />} />
+            <Route path="/orders" element={<UserManagement initialTab="orders" />} />
           </Routes>
           {!showSidebar && <Footer />}
         </div>

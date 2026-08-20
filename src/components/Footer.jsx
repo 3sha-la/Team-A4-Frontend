@@ -42,7 +42,7 @@ export default function Footer({
               <span className="flex h-8 w-8 items-center justify-center rounded-md bg-indigo-500 text-sm font-bold">
                 A
               </span>
-              AppName
+              House of Salaga
             </a>
             <p className="mt-3 max-w-xs text-sm text-slate-400">
               Building tools that help teams move faster, together.
@@ -81,7 +81,7 @@ export default function Footer({
         </div>
 
         <div className="mt-10 border-t border-slate-800 pt-6 text-sm text-slate-500">
-          © {new Date().getFullYear()} AppName. All rights reserved.
+          © {new Date().getFullYear()} House of Salaga. All rights reserved.
         </div>
       </div>
     </footer>
