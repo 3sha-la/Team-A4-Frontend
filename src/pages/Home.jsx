@@ -7,7 +7,6 @@ const Home = () => {
 
   return (
     <div className="bg-[#FAF9F6] min-h-screen text-gray-900 font-sans">
-      {/* Hero Section */}
       <section className="px-4 md:px-12 py-20 text-center max-w-4xl mx-auto">
         <p className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-3">
           High Performance Gear
@@ -27,7 +26,6 @@ const Home = () => {
         </Link>
       </section>
 
-      {/* Featured Products */}
       <section className="px-4 md:px-12 py-12 max-w-7xl mx-auto">
         <div className="flex justify-between items-end mb-8">
           <div>

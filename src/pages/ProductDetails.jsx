@@ -26,7 +26,6 @@ const ProductDetails = () => {
   return (
     <div className="bg-[#FAF8F5] min-h-screen py-8 font-sans text-gray-900">
       <div className="w-[90%] mx-auto">
-        {/* Back Button */}
         <div className="mb-6">
           <Link
             to="/shop"
@@ -36,9 +35,7 @@ const ProductDetails = () => {
           </Link>
         </div>
 
-        {/* Main Product Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start mb-16">
-          {/* Left - Image Container */}
           <div className="bg-[#EFECE6] rounded-2xl p-4 overflow-hidden">
             <img
               src={product.image}
@@ -47,7 +44,6 @@ const ProductDetails = () => {
             />
           </div>
 
-          {/* Right - Product Details */}
           <div className="flex flex-col pt-2">
             <p className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">
               {product.category || "AUDIO"} • {product.tag || "BEST SELLER"}
@@ -69,7 +65,6 @@ const ProductDetails = () => {
                 "Deep, detailed sound with adaptive noise cancellation and a 35-hour battery. Built for the ride, the focus session and the encore."}
             </p>
 
-            {/* Color Selector */}
             <div className="mb-6">
               <p className="text-xs font-bold mb-3">
                 Finish •{" "}
@@ -93,7 +88,6 @@ const ProductDetails = () => {
               </div>
             </div>
 
-            {/* Buttons */}
             <div className="flex gap-3 mb-8">
               <button className="flex-1 bg-[#FFD600] hover:bg-[#e6c200] text-black font-extrabold py-3.5 rounded-full text-sm transition">
                 Add to bag • ${product.price}
@@ -103,7 +97,6 @@ const ProductDetails = () => {
               </button>
             </div>
 
-            {/* Tech Specs */}
             <div className="grid grid-cols-3 gap-4 border-t border-b border-gray-200 py-6 mb-6 text-center">
               <div>
                 <div className="text-lg font-bold mb-1">⚡</div>
@@ -125,7 +118,6 @@ const ProductDetails = () => {
               </div>
             </div>
 
-            {/* Delivery Card */}
             <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm">
               <h4 className="text-xs font-bold uppercase mb-1">
                 Delivery & returns
@@ -138,7 +130,6 @@ const ProductDetails = () => {
           </div>
         </div>
 
-        {/* Pair It With Section */}
         <div className="pt-8 border-t border-gray-200">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-xl font-black uppercase">Pair it with.</h2>

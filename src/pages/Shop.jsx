@@ -5,7 +5,6 @@ import { products } from "../data/products";
 const Shop = () => {
   return (
     <div className="bg-[#FAF9F6] min-h-screen px-4 md:px-12 py-10 font-sans text-gray-900">
-      {/* Header */}
       <div className="mb-10">
         <p className="text-sm font-bold text-gray-500 tracking-wider mb-2">
           ALL GEAR
@@ -16,9 +15,7 @@ const Shop = () => {
         </p>
       </div>
 
-      {/* Main Content */}
       <div className="flex flex-col lg:flex-row gap-10">
-        {/* Sidebar */}
         <div className="w-full lg:w-1/4">
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
             <h3 className="font-bold text-lg mb-4">Browse by</h3>
@@ -39,7 +36,6 @@ const Shop = () => {
           </div>
         </div>
 
-        {/* Product Grid */}
         <div className="w-full lg:w-3/4">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {products.map((product) => (

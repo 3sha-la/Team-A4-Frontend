@@ -30,7 +30,6 @@ const Search = () => {
   return (
     <div className="bg-[#FAF8F5] min-h-screen py-10 font-sans text-gray-900">
       <div className="w-[90%] mx-auto">
-        {/* Title Section */}
         <div className="mb-8">
           <p className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">
             FIND YOUR NEXT ESSENTIAL
@@ -40,7 +39,6 @@ const Search = () => {
           </h1>
         </div>
 
-        {/* Search Input Box */}
         <div className="bg-white p-3 rounded-2xl border border-gray-100 shadow-sm mb-10">
           <form onSubmit={handleSearch} className="flex gap-3">
             <div className="relative flex-1">
@@ -64,7 +62,6 @@ const Search = () => {
           </form>
         </div>
 
-        {/* Results Header */}
         <div className="flex justify-between items-center mb-6">
           <p className="text-xl font-black uppercase tracking-tight">
             {query ? (
@@ -87,7 +84,6 @@ const Search = () => {
           </button>
         </div>
 
-        {/* Results Grid */}
         {filteredProducts.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
             {filteredProducts.map((product) => (
@@ -134,7 +130,6 @@ const Search = () => {
           </div>
         )}
 
-        {/* Bottom Callout Banner */}
         <div className="bg-[#FFED94] p-8 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
             <h4 className="font-black text-lg mb-1">Not finding it?</h4>
