@@ -1,5 +1,3 @@
-// src/components/Sidebar.jsx
-
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 
@@ -10,7 +8,6 @@ const Sidebar = ({ cartCount = 0 }) => {
   return (
     <aside className="w-[420px] min-w-[420px] max-w-[420px] bg-black text-white p-8 flex flex-col justify-between shrink-0 min-h-screen border-r border-zinc-800 font-sans">
       <div>
-        {/* Brand Logo */}
         <div className="mb-10">
           <Link to="/">
             <h1 className="text-2xl font-bold tracking-tight text-[#E5A800] font-serif">
@@ -22,7 +19,6 @@ const Sidebar = ({ cartCount = 0 }) => {
           </Link>
         </div>
 
-        {/* Navigation Links */}
         <nav className="space-y-3 text-sm">
           <Link
             to="/"
@@ -110,7 +106,6 @@ const Sidebar = ({ cartCount = 0 }) => {
         </nav>
       </div>
 
-      {/* User Profile Footer */}
       <div className="border-t border-zinc-800 pt-4 flex items-center gap-3">
         <div className="w-10 h-10 rounded-full bg-[#E5A800] text-black font-bold flex items-center justify-center text-xs">
           AS
