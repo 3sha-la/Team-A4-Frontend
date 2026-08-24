@@ -1,127 +1,120 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export default function Sidebar() {
+  const navigate = useNavigate();
   const location = useLocation();
 
-  const menuItems = [
-    { name: 'My Profile', path: '/profile', icon: '👤' },
-    { name: 'Order History', path: '/order-history', icon: '🛍️' },
-    { name: 'Wishlist', path: '/wishlist', icon: '🤍' },
-    { name: 'My Reviews', path: '/reviews', icon: '✏️' },
-    { name: 'Delete Account', path: '/delete-account', icon: '🗑️' },
-  ];
+  const isActive = (path) => location.pathname === path;
 
   return (
-    <div style={styles.sidebar}>
-      <h2 style={styles.brandTitle}>House of Salaga</h2>
+    <aside style={styles.sidebar}>
+      <div>
+        <h2 style={styles.brandTitle}>House of Salaga</h2>
+        <p style={styles.brandSubtitle}>LUXURY HERITAGE WEAR</p>
 
-      <div style={styles.menuContainer}>
-        {menuItems.map((item) => {
-          const isActive = location.pathname === item.path;
-          return (
-            <Link
-              key={item.name}
-              to={item.path}
-              style={{
-                ...styles.menuItem,
-                ...(isActive ? styles.activeMenuItem : {}),
-              }}
-            >
-              <span style={styles.icon}>{item.icon}</span>
-              <span style={{ color: isActive ? '#f5b000' : '#ccc', fontWeight: isActive ? '600' : 'normal' }}>
-                {item.name}
-              </span>
-              {isActive && <div style={styles.activeIndicator} />}
-            </Link>
-          );
-        })}
+        <nav style={styles.nav}>
+          <div 
+            style={{ ...styles.navItem, ...(isActive('/') ? styles.activeNavItem : {}) }}
+            onClick={() => navigate('/')}
+          >
+            <span>🏠</span> Home Collection
+          </div>
+
+          <div style={styles.navItem}>
+            <span>🛍️</span> All Product
+          </div>
+
+          <div 
+            style={{ ...styles.navItem, ...(isActive('/order-history') ? styles.activeNavItem : {}) }}
+            onClick={() => navigate('/order-history')}
+          >
+            <span>📦</span> My Orders
+          </div>
+
+          <div style={styles.navItem}>
+            <span>🤍</span> My Wishlist
+          </div>
+
+          <div 
+            style={{ 
+              ...styles.navItem, 
+              ...(isActive('/checkout') || isActive('/payment') || isActive('/order-summary') ? styles.activeNavItem : {}) 
+            }}
+            onClick={() => navigate('/checkout')}
+          >
+            <span>🛒</span> Shopping Cart
+          </div>
+
+          <div style={styles.navItem}>
+            <span>⭐</span> Reviews & Ratings
+          </div>
+
+          <div 
+            style={{ ...styles.navItem, ...(isActive('/profile') ? styles.activeNavItem : {}) }}
+            onClick={() => navigate('/profile')}
+          >
+            <span>👤</span> My Profile
+          </div>
+        </nav>
       </div>
 
+      {/* User Profile Footer - Name Updated */}
       <div style={styles.userSection}>
-        <div style={styles.userAvatar} />
+        <div style={styles.avatar}></div>
         <div>
-          <div style={styles.userName}>User</div>
+          <div style={styles.userName}>Thrishala Weerasekara</div>
           <div style={styles.signOut}>Sign Out</div>
         </div>
       </div>
-    </div>
+    </aside>
   );
 }
 
 const styles = {
   sidebar: {
-    width: '260px',
+    width: '240px',
     backgroundColor: '#000000',
-    minHeight: '100vh',
+    color: '#ffffff',
     padding: '30px 20px',
-    color: '#fff',
     display: 'flex',
     flexDirection: 'column',
+    justifyContent: 'space-between',
+    minHeight: '100vh',
     boxSizing: 'border-box',
-    fontFamily: 'sans-serif'
   },
-  brandTitle: {
-    color: '#f5b000',
-    fontSize: '20px',
-    fontWeight: 'bold',
-    marginBottom: '40px',
-    marginTop: '10px'
-  },
-  menuContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '15px',
-    flexGrow: 1
-  },
-  menuItem: {
+  brandTitle: { fontSize: '18px', margin: 0, fontWeight: 'bold', color: '#f5b000' },
+  brandSubtitle: { fontSize: '9px', color: '#888', marginTop: '4px', letterSpacing: '1px' },
+  nav: { marginTop: '40px', display: 'flex', flexDirection: 'column', gap: '8px' },
+  navItem: {
     display: 'flex',
     alignItems: 'center',
+    gap: '12px',
     padding: '12px 15px',
     borderRadius: '8px',
-    textDecoration: 'none',
-    position: 'relative',
-    transition: '0.3s'
+    fontSize: '13px',
+    color: '#ccc',
+    cursor: 'pointer',
+    transition: '0.2s',
   },
-  activeMenuItem: {
-    backgroundColor: '#111111',
-    border: '1px solid #222222'
-  },
-  activeIndicator: {
-    position: 'absolute',
-    right: '12px',
-    width: '4px',
-    height: '16px',
-    backgroundColor: '#f5b000',
-    borderRadius: '2px'
-  },
-  icon: {
-    marginRight: '12px',
-    fontSize: '16px'
+  activeNavItem: {
+    backgroundColor: '#1a1a1a',
+    color: '#f5b000',
+    fontWeight: 'bold',
   },
   userSection: {
     display: 'flex',
     alignItems: 'center',
     gap: '12px',
-    padding: '12px',
-    border: '1px solid #222',
-    borderRadius: '30px',
-    marginTop: 'auto'
+    paddingTop: '20px',
+    borderTop: '1px solid #222',
   },
-  userAvatar: {
-    width: '28px',
-    height: '28px',
+  avatar: {
+    width: '35px',
+    height: '35px',
     borderRadius: '50%',
-    backgroundColor: '#f5b000'
+    backgroundColor: '#c9a159',
   },
-  userName: {
-    fontSize: '13px',
-    fontWeight: 'bold',
-    color: '#fff'
-  },
-  signOut: {
-    fontSize: '11px',
-    color: '#ff4d4d',
-    cursor: 'pointer'
-  }
+  userName: { fontSize: '12px', fontWeight: 'bold', color: '#fff' },
+  signOut: { fontSize: '10px', color: '#ff4d4d', cursor: 'pointer', marginTop: '2px' },
 };
