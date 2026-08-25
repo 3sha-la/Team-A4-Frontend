@@ -3,6 +3,8 @@ import express from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import healthRoutes from './routes/health.routes.js';
+import orderRoutes from './routes/orderRoutes.js';
+import wishlistRoutes from './routes/wishlistRoutes.js';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler.js';
 
 const app = express();
@@ -18,6 +20,9 @@ app.get('/', (request, response) => {
 });
 
 app.use('/api/health', healthRoutes);
+app.use('/api/orders', orderRoutes);
+app.use('/api/wishlist', wishlistRoutes);
+
 app.use(notFoundHandler);
 app.use(errorHandler);
 
