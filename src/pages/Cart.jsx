@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { products } from "../data/products";
 
 export default function CartPage({
   cartItems: initialCartItems = [],
   setCartItems: parentSetCartItems,
 }) {
-  // Local state or props fallback
+  const navigate = useNavigate();
+
   const [localCartItems, setLocalCartItems] = useState([
     { ...products[0], quantity: 1 },
     { ...products[1], quantity: 1 },
@@ -45,6 +46,23 @@ export default function CartPage({
   );
 
   const total = cartItems.length > 0 ? subtotal + shippingFee : 0;
+
+  const handleProceedToCheckout = () => {
+    if (cartItems.length === 0) return;
+
+    const orderSummary = {
+      cartItems,
+      subtotal,
+      shippingFee,
+      total,
+    };
+
+    localStorage.setItem("checkoutData", JSON.stringify(orderSummary));
+
+    navigate("/checkout", {
+      state: orderSummary,
+    });
+  };
 
   return (
     <main className="flex-1 bg-[#f6f3ee] px-5 py-7 sm:px-8 sm:py-10 lg:px-12 min-h-screen text-[#28231d]">
@@ -186,6 +204,7 @@ export default function CartPage({
           </div>
 
           <button
+            onClick={handleProceedToCheckout}
             disabled={cartItems.length === 0}
             className={`w-full font-bold py-3.5 rounded-lg text-xs tracking-wider uppercase transition shadow-xs ${
               cartItems.length > 0
