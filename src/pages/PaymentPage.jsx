@@ -13,6 +13,17 @@ const shipping = 450;
 export default function PaymentPage() {
   const [method, setMethod] = useState('card');
   const [confirmed, setConfirmed] = useState(false);
+  const [cardErrors, setCardErrors] = useState({});
+  const [isCardValid, setIsCardValid] = useState(false);
+
+  const handleConfirmPayment = () => {
+    if (method === 'card') {
+      if (!isCardValid) {
+        return;
+      }
+    }
+    setConfirmed(true);
+  };
 
   return (
     <main className="min-h-screen flex-1 bg-[#f6f3ee] px-5 py-8 sm:px-8 lg:px-12 lg:py-10">
@@ -54,11 +65,19 @@ export default function PaymentPage() {
                 </div>
 
                 <div className="mt-8">
-                  {method === 'card' && <CardForm />}
+                  {method === 'card' && <CardForm onValidationChange={setIsCardValid} onErrorsChange={setCardErrors} />}
                   {method === 'paypal' && <InfoPanel title="PayPal" text="You will be redirected to PayPal to complete your payment securely." />}
                   {method === 'cash' && <InfoPanel title="Cash on Delivery" text="Pay with cash when your order arrives. Please have the exact amount ready for the delivery rider. A LKR 400 COD fee applies." />}
                 </div>
-                <button onClick={() => setConfirmed(true)} className="mt-8 flex w-full items-center justify-center gap-2 rounded-md bg-[#c9a227] py-3 text-xs font-bold uppercase tracking-wide text-[#28231d] transition hover:bg-[#b48e1e]">
+                <button 
+                  onClick={handleConfirmPayment} 
+                  disabled={method === 'card' && !isCardValid}
+                  className={`mt-8 flex w-full items-center justify-center gap-2 rounded-md py-3 text-xs font-bold uppercase tracking-wide transition ${
+                    method === 'card' && !isCardValid
+                      ? 'bg-[#d8cdbd] text-[#aaa69e] cursor-not-allowed'
+                      : 'bg-[#c9a227] text-[#28231d] hover:bg-[#b48e1e]'
+                  }`}
+                >
                   Confirm Payment - LKR {(subtotal + shipping + (method === 'cash' ? 400 : 0)).toLocaleString()}
                 </button>
               </>
