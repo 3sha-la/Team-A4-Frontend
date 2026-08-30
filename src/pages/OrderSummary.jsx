@@ -1,33 +1,43 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 
 export default function OrderSummary() {
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const cartItems = [
-    { 
-      id: 1, 
-      name: "Men's Premium Dress Shirt", 
-      desc: 'Navy Micro-Patterned Cotton - Qty 1', 
-      price: 6700, 
-      img: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=150' 
+  const payment = location.state?.payment;
+  const summaryData = location.state || {};
+  const cartItems = summaryData.cartItems || [
+    {
+      id: 1,
+      name: "Men's Premium Dress Shirt",
+      desc: 'Navy Micro-Patterned Cotton - Qty 1',
+      price: 6700,
+      img: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=150',
     },
-    { 
-      id: 2, 
-      name: 'Rolex Datejust Automatic Watch', 
-      desc: 'Stainless Steel & 18k Yellow Gold - Qty 1', 
-      price: 25000, 
-      img: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=150' 
+    {
+      id: 2,
+      name: 'Rolex Datejust Automatic Watch',
+      desc: 'Stainless Steel & 18k Yellow Gold - Qty 1',
+      price: 25000,
+      img: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=150',
     },
-    { 
-      id: 3, 
-      name: 'Designer Leather Top-Handle Bag', 
-      desc: 'Off-White / Gold Hardware - Qty 1', 
-      price: 6200, 
-      img: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=150' 
+    {
+      id: 3,
+      name: 'Designer Leather Top-Handle Bag',
+      desc: 'Off-White / Gold Hardware - Qty 1',
+      price: 6200,
+      img: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=150',
     },
   ];
+
+  const subtotal = summaryData.subtotal || 37900;
+  const shipping = summaryData.shipping || 1650;
+  const total = summaryData.total || subtotal + shipping;
+  const orderId = payment?.orderId || '#SZ-2026-89341';
+  const confirmationCode = payment?.confirmationCode || 'PAY-2026-89341';
+  const paymentMethod = payment?.method || 'card';
 
   return (
     <div style={styles.container}>
@@ -44,9 +54,9 @@ export default function OrderSummary() {
             <h1 style={styles.bannerTitle}>Order Confirmed!</h1>
             <p style={styles.bannerSub}>Thank you for your order, Amara! 🎉</p>
             <p style={styles.orderId}>
-              Order ID <span style={styles.orderIdHighlight}>#SZ-2026-89341</span>
+              Order ID <span style={styles.orderIdHighlight}>{orderId}</span>
             </p>
-            <p style={styles.emailNote}>A receipt has been sent to amara@email.com</p>
+            <p style={styles.emailNote}>Payment method: {paymentMethod.toUpperCase()} • Confirmation: {confirmationCode}</p>
           </div>
 
           {/* Items Ordered Card */}
@@ -73,7 +83,7 @@ export default function OrderSummary() {
 
             <div style={styles.totalRow}>
               <span>Total</span>
-              <span>LKR 39550</span>
+              <span>LKR {total}</span>
             </div>
           </div>
 

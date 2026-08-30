@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // 1. useNavigate import කළා
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import Sidebar from '../components/Sidebar';
 
 export default function Payment() {
-  const navigate = useNavigate(); // 2. navigate function එක සාදාගත්තා
+  const navigate = useNavigate();
 
   const [paymentMethod, setPaymentMethod] = useState('card');
   const [cardData, setCardData] = useState({
@@ -12,6 +13,8 @@ export default function Payment() {
     expiry: '',
     cvv: '',
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
   const cartItems = [
     { id: 1, name: "Men's Premium Dress Shirt", price: 6700 },
@@ -66,10 +69,37 @@ export default function Payment() {
         isCvvValid(cardData.cvv)
       : true; // Cash / Paypal pass without card inputs
 
-  // 3. Confirm Payment click කළ විට /order-summary එකට navigate වෙන පරිදි සකස් කළා
-  const handlePayment = () => {
-    if (isFormValid) {
-      navigate('/order-summary');
+  const handlePayment = async () => {
+    if (!isFormValid) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitError('');
+
+    try {
+      const response = await axios.post('http://localhost:5000/api/payments', {
+        orderId: 'ord_2026_001',
+        userId: 'usr_101',
+        amount: total,
+        method: paymentMethod,
+        status: 'pending',
+        currency: 'LKR',
+      });
+
+      navigate('/order-summary', {
+        state: {
+          payment: response.data.payment,
+          total,
+          subtotal,
+          shipping,
+          cartItems,
+        },
+      });
+    } catch (error) {
+      setSubmitError(error.response?.data?.message || 'Payment failed. Please try again.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -231,17 +261,19 @@ export default function Payment() {
               </>
             )}
 
+            {submitError && <div style={styles.errorBanner}>{submitError}</div>}
+
             <button
-              disabled={!isFormValid}
+              disabled={!isFormValid || isSubmitting}
               onClick={handlePayment}
               style={{
                 ...styles.submitBtn,
-                backgroundColor: isFormValid ? '#f5b000' : '#e0e0e0',
-                color: isFormValid ? '#000' : '#888',
-                cursor: isFormValid ? 'pointer' : 'not-allowed',
+                backgroundColor: isFormValid && !isSubmitting ? '#f5b000' : '#e0e0e0',
+                color: isFormValid && !isSubmitting ? '#000' : '#888',
+                cursor: isFormValid && !isSubmitting ? 'pointer' : 'not-allowed',
               }}
             >
-              CONFIRM PAYMENT - LKR {total}
+              {isSubmitting ? 'PROCESSING PAYMENT...' : `CONFIRM PAYMENT - LKR ${total}`}
             </button>
           </div>
 
@@ -322,6 +354,7 @@ const styles = {
   },
 
   errorText: { color: '#ff4d4d', fontSize: '9px', marginTop: '4px', display: 'block' },
+  errorBanner: { marginBottom: '12px', padding: '10px 12px', backgroundColor: '#fff1f0', border: '1px solid #f5c2c7', borderRadius: '6px', color: '#b42318', fontSize: '11px', fontWeight: '600' },
   stripeNote: { padding: '10px', border: '1px dashed #ccc', borderRadius: '6px', fontSize: '10px', color: '#666', textAlign: 'center', marginBottom: '20px' },
   submitBtn: { width: '100%', border: 'none', padding: '12px', borderRadius: '6px', fontWeight: 'bold', fontSize: '12px', transition: '0.3s' },
 
