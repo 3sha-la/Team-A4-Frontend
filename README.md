@@ -1,4 +1,36 @@
-# React + Vite
+# House of Salaga
+
+## Run the project
+
+Install Node.js, Docker Desktop, and ensure Docker Desktop is running.
+
+### Frontend
+
+```bash
+npm install
+npm run dev
+```
+
+### Backend and MongoDB
+
+In a second terminal:
+
+```bash
+docker compose up -d mongodb
+cd backend
+npm install
+npm start
+```
+
+The backend uses the local connection in `backend/.env`:
+
+```env
+MONGODB_URI=mongodb://127.0.0.1:27017/house-of-salaga
+```
+
+MongoDB data is persisted in the Docker volume `mongodb_data`. Stop the database with `docker compose down`.
+
+## React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
 
